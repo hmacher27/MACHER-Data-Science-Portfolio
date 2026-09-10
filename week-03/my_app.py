@@ -12,6 +12,7 @@ else:
 color = st.color_picker("Pick a color", "#00f900")
 st.write(f"You picked: {color}")
 
+# What I added for fun 
 def hex_to_rgb(hex_color):
     hex_color = hex_color.lstrip("#")
     return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
