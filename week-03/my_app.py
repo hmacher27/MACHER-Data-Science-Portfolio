@@ -68,6 +68,9 @@ filtered_df = df[(df["City"] == city) & (df["Occupation"] == occupation)]
 st.write(f"{occupation}s in {city}:")
 st.table(style_header(filtered_df))
 
+st.subheader("Salary Data")
+st.bar_chart(df["Salary"])
+
 # Show summary statistics
 st.subheader("Summary Statistics")
 st.table(style_header(df.describe()))
