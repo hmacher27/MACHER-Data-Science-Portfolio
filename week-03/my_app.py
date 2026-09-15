@@ -12,7 +12,7 @@ else:
 color = st.color_picker("Pick a color", "#00f900")
 st.write(f"You picked: {color}")
 
-# What I added for fun 
+# What I added for fun to combine different elements
 def hex_to_rgb(hex_color):
     hex_color = hex_color.lstrip("#")
     return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
@@ -30,7 +30,6 @@ def lighten_color(hex_color, amount=0.7):
 text_color = get_contrast_text_color(color)
 light_color = lighten_color(color, amount=0.7)
 
-# Helper: style a dataframe's header row and body cells using the picked color
 def style_header(df):
     return df.style.set_table_styles(
         [
