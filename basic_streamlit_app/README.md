@@ -1,1 +1,39 @@
-As a college student that is about to graduate, I need to start thinking about where I'll be living next year. As I have decided on the city, Washington DC, I have been trying to find a place to live next year - which has been very overwhelming. I built this app to help alleviate some of the stress of sorting through hundreds of options of apartments, and narrow down the ones I'm interested in.
+# DC Homes Finder
+
+Moving to (or around) Washington DC and trying to find a place to live can be overwhelming, with hundreds of listings to sort through and no easy way to narrow them down, specially if you're not from DC. I built this app to help make that process a little less stressful, letting you filter through DC home listings by price, bedrooms, bathrooms, and location to find options that actually match what you're looking for.
+
+## Data Source
+
+The data comes from the [DC Residential Properties dataset](https://www.kaggle.com/datasets/christophercorrea/dc-residential-properties?select=DC_Properties.csv) on Kaggle.
+
+## What the App Does
+
+- Filter listings by price range, number of bedrooms, number of bathrooms, and ward
+- See how many listings match the filters
+- View the matching listings on a map
+- Browse the full results in a table
+
+## Folder Structure
+
+```
+basic_streamlit_app/
+├── README.md
+├── main.py
+├── data/
+│   └── DC_Properties.csv
+```
+
+## How to Run It
+
+1. Make sure `DC_Properties.csv` is inside the `data/` folder
+2. Install the required packages:
+
+   ```
+   pip install streamlit pandas
+   ```
+
+3. From the project root, run:
+
+   ```
+   streamlit run basic_streamlit_app/main.py
+   ```
