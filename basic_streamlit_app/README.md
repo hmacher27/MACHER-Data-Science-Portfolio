@@ -1,6 +1,6 @@
 # DC Homes Finder
 
-Moving to (or around) Washington DC and trying to find a place to live can be overwhelming, with hundreds of listings to sort through and no easy way to narrow them down, specially if you're not from DC. I built this app to help make that process a little less stressful, letting you filter through DC home listings by price, bedrooms, bathrooms, and location to find options that actually match what you're looking for.
+Moving to (or around) Washington, DC and trying to find a place to live can be overwhelming, with hundreds of listings to sort through and no easy way to narrow them down, especially if you're not from DC. I built this app because I'm moving to DC and wanted to become more informed about the residential housing market and what prices look like if I decide to stay in the area long-term. The app helps make that process a little less stressful by letting you filter through DC home listings by price, bedrooms, bathrooms, and location to find options that actually match what you're looking for.
 
 ## Data Source
 
