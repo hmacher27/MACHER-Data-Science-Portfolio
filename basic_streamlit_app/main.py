@@ -5,7 +5,8 @@ st.title("Washington DC Homes for Sale")
 st.write("This app lets you filter through DC home listings to find houses that match what you're looking for!")
 
 # load the dataset
-df = pd.read_csv('data/DC_Properties.csv')
+from pathlib import Path
+df = pd.read_csv(Path(__file__).parent / "data" / "DC_Properties.csv")
 
 # get rid of rows that don't have a price and only keep qualified sales
 df = df.dropna(subset=['PRICE'])
