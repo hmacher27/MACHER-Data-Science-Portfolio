@@ -1,6 +1,6 @@
 # ML Classification Explorer
 
-**Deployed app:** https://macher-ml-explorer.streamlit.app
+**Deployed app:** [https://macher-ml-explorer.streamlit.app](https://macher-ml-explorer.streamlit.app)
 
 ## Overview
 
