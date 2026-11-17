@@ -1,6 +1,3 @@
-# ML Streamlit App - Portfolio Update 3
-# Based on the in-class notebooks (logistic regression, decision trees, random forests, KNN)
-
 import os
 import pandas as pd
 import seaborn as sns
@@ -19,7 +16,7 @@ st.set_page_config(page_title="ML Explorer", layout="wide")
 st.title("Machine Learning Explorer")
 st.write("Upload a dataset (or use the Greece travel sample), pick a target, train a model, and see how it does!")
 
-# Step 1: Load the data
+# load the data
 st.sidebar.header("1. Data")
 data_choice = st.sidebar.radio("Choose a dataset", ["Greece Travel Data (sample)", "Upload my own CSV"])
 
@@ -30,7 +27,7 @@ if data_choice == "Upload my own CSV":
         st.stop()
     df = pd.read_csv(uploaded_file)
 else:
-    # Greece Travel Data from Kaggle (Team Incribo)
+    # Greece Travel Data 
     path = os.path.join(os.path.dirname(__file__), "greece_data", "travel_tourism_dataset.csv")
     df = pd.read_csv(path)
 
@@ -38,10 +35,9 @@ st.header("The Data")
 st.write("Shape:", df.shape)
 st.dataframe(df.head())
 
-# Step 2: Pick the target and features
+# pick the target and features
 st.sidebar.header("2. Target and Features")
 columns = list(df.columns)
-# Only let the user pick targets that are categories (20 or fewer unique values)
 target_options = [c for c in columns if df[c].nunique() <= 20]
 if len(target_options) == 0:
     st.warning("None of the columns look like categories (20 or fewer unique values), so there's nothing to predict. Try a different CSV.")
@@ -49,7 +45,7 @@ if len(target_options) == 0:
 default_target = target_options.index("Mode of Travel") if "Mode of Travel" in target_options else 0
 target = st.sidebar.selectbox("Target column", target_options, index=default_target)
 
-# Make the target binary (1 = the class we pick, 0 = everything else), like is_unaligned in class
+# make the target binary 
 target_values = list(df[target].dropna().astype(str).unique())
 default_positive = target_values.index("Flight") if "Flight" in target_values else 0
 positive_class = st.sidebar.selectbox("Positive class (1)", target_values, index=default_positive)
@@ -61,22 +57,22 @@ if len(features) == 0:
     st.warning("Pick at least one feature.")
     st.stop()
 
-# Preprocessing: drop missing values and one-hot encode text columns
+# drop missing values 
 df_clean = df[features + [target]].dropna()
 X = pd.get_dummies(df_clean[features], drop_first=True)  # drop_first avoids the dummy trap
 y = (df_clean[target].astype(str) == positive_class).astype(int)
 
-# Make sure both classes have enough rows, otherwise the model only sees one class and crashes
+# make sure both classes have enough rows
 if y.value_counts().min() < 10 or y.nunique() < 2:
     st.warning("Not enough rows in one of the classes. Try a different target or positive class.")
     st.stop()
 
-# Step 3: Train/test split
+# train/test split
 st.sidebar.header("3. Train/Test Split")
 test_size = st.sidebar.slider("Test size", 0.1, 0.5, 0.2)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=42)
 
-# Step 4: Pick a model and its hyperparameters
+# pick a model and its hyperparameters
 st.sidebar.header("4. Model")
 model_name = st.sidebar.selectbox("Model", ["Logistic Regression", "Decision Tree", "Random Forest", "KNN"])
 
@@ -97,18 +93,18 @@ else:
     k = st.sidebar.slider("n_neighbors (k)", 1, 25, 5, step=2)
     model = KNeighborsClassifier(n_neighbors=k)
 
-# Scale the features for logistic regression and KNN (fit on train only so nothing leaks from test)
+# scale the features for logistic regression and KNN 
 if model_name in ["Logistic Regression", "KNN"]:
     scaler = StandardScaler()
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.transform(X_test)
 
-# Train the model (Streamlit reruns everything when a slider changes, so it retrains automatically)
+# train the model 
 model.fit(X_train, y_train)
 y_pred = model.predict(X_test)
 y_probs = model.predict_proba(X_test)[:, 1]
 
-# Step 5: Evaluate the model
+# evaluate the model
 st.header(f"Results: {model_name}")
 col1, col2, col3, col4, col5 = st.columns(5)
 col1.metric("Accuracy", round(accuracy_score(y_test, y_pred), 2))
@@ -126,7 +122,7 @@ st.markdown(f"""
 - **ROC AUC:** how well the model separates the two classes. 0.5 = random guessing, 1.0 = perfect.
 """)
 
-# Confusion matrix and ROC curve (same as the in-class notebooks)
+# confusion matrix and ROC curve (same as the in-class notebooks)
 left, right = st.columns(2)
 with left:
     st.subheader("Confusion Matrix")
@@ -148,7 +144,6 @@ with right:
     st.pyplot(fig)
     st.caption("The closer the curve gets to the top-left corner, the better the model.")
 
-# Feature importance for the tree models (like the random forest notebook)
 if model_name in ["Decision Tree", "Random Forest"]:
     st.subheader("Feature Importance")
     importances = pd.Series(model.feature_importances_, index=X.columns).sort_values(ascending=False)
